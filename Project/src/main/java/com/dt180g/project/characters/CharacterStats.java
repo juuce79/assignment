@@ -114,24 +114,29 @@ public class CharacterStats {
     public void adjustActionPoints(int amount) {
         BaseStat actionPointsStat = getStat(AppConfig.COMBAT_STAT_ACTION_POINTS);
         actionPointsStat.adjustDynamicModifier(amount);
+        System.out.println("Adjusting dynamic action points by " + amount);
     }
 
     public void adjustHitPoints(int amount) {
         BaseStat vitalityStat = getStat(AppConfig.TRAIT_VITALITY);
         vitalityStat.adjustDynamicModifier(amount);
+        System.out.println("Adjusting dynamic hit points by " + amount);
     }
 
     public void adjustEnergyLevel(int amount) {
         BaseStat energyLevelStat = getStat(AppConfig.TRAIT_ENERGY);
         energyLevelStat.adjustDynamicModifier(amount);
+        System.out.println("Adjusting dynamic energy level by " + amount);
     }
 
     public void adjustStatStaticModifier(String name, int amount) {
         getStat(name).adjustStaticModifier(amount);
+        System.out.println("Adjusting static " + name + " by " + amount);
     }
 
     public void adjustStatDynamicModifier(String name, int amount) {
         getStat(name).adjustDynamicModifier(amount);
+        System.out.println("Adjusting dynamic " + name + " by " + amount);
     }
 
     public void resetActionPoints() {

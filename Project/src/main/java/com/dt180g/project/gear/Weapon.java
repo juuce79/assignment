@@ -19,6 +19,7 @@ public class Weapon extends BaseGear {
         wield = mappedValues.get("wield");
         String attributeName = StatsManager.INSTANCE.getRandomAttributeName();
         attribute = new Attribute(attributeName, Randomizer.INSTANCE.getRandomValue(AppConfig.WEAPON_ATTRIBUTE_VALUE_UPPER_BOUND));
+        System.out.println("Creating Weapon: " + getName() + " with Attribute: " + attribute.getStatName() + ", Base Value: " + attribute.getBaseValue());
     }
 
     public int getDamage() {

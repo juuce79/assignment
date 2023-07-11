@@ -6,12 +6,14 @@ import com.dt180g.project.characters.BaseCharacter;
 import com.dt180g.project.characters.CharacterStats;
 import com.dt180g.project.gear.GearManager;
 import com.dt180g.project.gear.Weapon;
+import com.dt180g.project.stats.Attribute;
+import com.dt180g.project.stats.Trait;
 import com.dt180g.project.support.AppConfig;
 import com.dt180g.project.gear.Armor;
 import com.dt180g.project.support.ActivityLogger;
 
 public abstract class BaseHero extends BaseCharacter {
-    protected String characterName;
+    private String characterName;
 
     protected BaseHero(String characterName, List<Integer> attributes) {
         super(new CharacterStats(attributes));
@@ -29,17 +31,22 @@ public abstract class BaseHero extends BaseCharacter {
             }
             if (weapon != null) {
                 this.getEquipment().addWeapon(weapon);
-            } else {
-                break;
+                Attribute attribute = (Attribute) weapon.getStat();
+                this.characterStats.adjustStatStaticModifier(attribute.getStatName(), attribute.getBaseValue());
             }
         }
 
-        String[] slots = { AppConfig.ARMOR_CHEST, AppConfig.ARMOR_FEET, AppConfig.ARMOR_HANDS, AppConfig.ARMOR_HEAD, AppConfig.ARMOR_LEGS };
-        for (String slot : slots) {
-            if (this.getEquipment().getArmorPieces() == null) {
-                Armor armor = GearManager.INSTANCE.getRandomArmorOfType(slot, characterClass);
+        String[] slots = {AppConfig.ARMOR_CHEST, AppConfig.ARMOR_FEET, AppConfig.ARMOR_HANDS, AppConfig.ARMOR_HEAD, AppConfig.ARMOR_LEGS};
+        List<Armor> currentArmorPieces = this.getEquipment().getArmorPieces();
+
+        for (int i = 0; i < slots.length; i++) {
+            Armor currentArmor = currentArmorPieces.get(i);
+            if (currentArmor.getProtection() == 0) {
+                Armor armor = GearManager.INSTANCE.getRandomArmorOfType(slots[i], characterClass);
                 if (armor != null) {
-                    this.getEquipment().addArmorPiece(slot, armor);
+                    this.getEquipment().addArmorPiece(slots[i], armor);
+                    Trait trait = (Trait) armor.getStat();
+                    this.characterStats.adjustStatStaticModifier(trait.getStatName(), trait.getBaseValue());
                 }
             }
         }

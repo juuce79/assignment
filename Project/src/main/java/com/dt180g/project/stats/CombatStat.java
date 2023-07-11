@@ -14,8 +14,6 @@ public class CombatStat extends BaseStat {
 
     @Override
     public int getBaseValue() {
-        int attributeValue = (int) Math.round(attributeReliance.getModifiedValue() * AppConfig.COMBAT_STAT_MULTIPLIER);
-        int traitValue = (int) Math.round(traitReliance.getModifiedValue() * AppConfig.COMBAT_STAT_MULTIPLIER);
-        return attributeValue + traitValue;
+        return (int) Math.round((attributeReliance.getModifiedValue() + traitReliance.getModifiedValue()) * AppConfig.COMBAT_STAT_MULTIPLIER);
     }
 }

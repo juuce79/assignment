@@ -56,6 +56,10 @@ public abstract class BaseGear {
         }
     }
 
+    public String getName() {
+        return this.gearName;
+    }
+
     public String getType() {
         return type;
     }
